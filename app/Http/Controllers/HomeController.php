@@ -38,12 +38,12 @@ class HomeController extends Controller
 
         if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
             // The passwords matches
-            return redirect()->back()->with("error","Your current password does not matches with the password you provided. Please try again.");
+            return redirect()->back()->with("error","Password Saat Ini Tidak Valid!.");
         }
 
         if(strcmp($request->get('current-password'), $request->get('new-password')) == 0){
             //Current password and new password are same
-            return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
+            return redirect()->back()->with("error","Password Anda Sama Seperti Password Sekarang!.");
         }
 
         $validatedData = $request->validate([
@@ -54,12 +54,12 @@ class HomeController extends Controller
 
         //Check Password History
         $user = Auth::user();
-        $passwordHistories = $user->passwordHistories()->take(3)->get();
+        $passwordHistories = $user->passwordHistories()->where('user_id', auth()->user()->id)->orderBy('id', 'desc')->take(3)->get();
         foreach($passwordHistories as $passwordHistory){
             echo $passwordHistory->password;
             if (Hash::check($request->get('new-password'), $passwordHistory->password)) {
                 // The passwords matches
-                return redirect()->back()->with("error","Your new password can not be same as any of your recent passwords. Please choose a new password.");
+                return redirect()->back()->with("error","Password Anda Sudah Pernah Di Gunakan Sebelumnya.");
             }
         }
 
@@ -75,7 +75,7 @@ class HomeController extends Controller
             'password' => bcrypt($request->get('new-password'))
         ]);
 
-        return redirect()->back()->with("success","Password changed successfully !");
+        return redirect()->back()->with("success","Password Sukses Di Ubah!");
 
     }
 }
