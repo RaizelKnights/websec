@@ -62,8 +62,6 @@ class HomeController extends Controller
                 return redirect()->back()->with("error","Password Anda Sudah Pernah Di Gunakan Sebelumnya.");
             }
         }
-
-
         //Change Password
 
         $user->password = bcrypt($request->get('new-password'));

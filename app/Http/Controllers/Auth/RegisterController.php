@@ -55,8 +55,8 @@ class RegisterController extends Controller
             'password' => ['required','dumbpwd','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%]).*$/', 'string', 'min:8', 'confirmed'],
         ],
         [
-            'password.regex' => 'Use Special Character And Uppercase',
-            'password.dumbpwd' => 'Dont Use Bad Password!',
+            'password.regex' => 'Gunakan Spesial Karakter Dan Huruf Besar!',
+            'password.dumbpwd' => 'Password Terlalu Buruk!',
         ]
         );
     }
